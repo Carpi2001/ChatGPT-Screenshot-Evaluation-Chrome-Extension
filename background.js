@@ -1,5 +1,26 @@
 //the code that runs in the service worker (i think that makes sense, at least thats how I understand it)
 
+chrome.runtime.onInstalled.addListener(() => {
+    chrome.contextMenus.create({
+        id: "captureScreenshot",
+        title: "Screenshot Page and Describe",
+        contexts: ["all"]
+    });
+});//adds context menu button
+
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+    if (info.menuItemId === "captureScreenshot") {
+        chrome.tabs.captureVisibleTab(null, { format: "png" }, function (image) {//captures screen
+            if (chrome.runtime.lastError || !image) {
+                console.error("Failed to capture screenshot:", chrome.runtime.lastError);
+                return;
+            }//checks if screen was captured successfully
+            console.log("Screenshot captured!");
+            processScreenshot(image);//process screenshot through chatgpt and gets a response back, which is then displayed
+        });
+    }
+});//when context menu button pressed, triggers the screenshot functionality
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     console.log("Received message:", message);
 
@@ -65,7 +86,7 @@ function processScreenshot(imageData) {
             console.log("Description:", data.choices[0].message.content);
 			sendNotification(data.choices[0].message.content);//for chrome notification containing the response
 			sendAlert(data.choices[0].message.content);//for chrome alert containing response
-
+			speakAlert(data.choices[0].message.content)//chrome text to speach for the response
         } else {
             console.error("No valid response from OpenAI.");
         }
@@ -101,3 +122,7 @@ function sendAlert(aiResponse) {
         }
     });
 }//creates a chrome alert on the screenshotted page with the passed text
+
+function speakAlert(aiResponse){
+	chrome.tts.speak(aiResponse);
+}//text to speech function for the chatgpt response
