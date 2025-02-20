@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Webpage Capture & Describe",
-  "version": "1.0",
+  "name": "Screeshot & Describe",
+  "version": "1.0.2",
   "description": "Capture the full webpage and get a description from ChatGPT.",
   "permissions": ["scripting", "activeTab", "storage", "contextMenus", "tabs","notifications"],
   "background": {
@@ -24,5 +24,11 @@
     "matches": ["<all_urls>"], 
     "js": ["content.js"]
   }
-]
+],
+"icons": {
+	"16": "/icon.png",
+    "32": "/icon.png",
+    "48": "/icon.png",
+    "128": "/icon.png"
+  }
 }
