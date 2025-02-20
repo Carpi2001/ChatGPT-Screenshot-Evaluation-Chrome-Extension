@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Webpage Capture & Describe",
+  "version": "1.0",
+  "description": "Capture the full webpage and get a description from ChatGPT.",
+  "permissions": ["scripting", "activeTab", "storage", "contextMenus", "tabs","notifications"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": ["*://*/*"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  
+  "options_page": "options.html",
+  "web_accessible_resources": [
+    {
+        "resources": ["/icon.jpeg"],
+        "matches": ["<all_urls>"]
+    }
+],
+"content_scripts": [
+  {
+    "matches": ["<all_urls>"], 
+    "js": ["content.js"]
+  }
+]
+}
