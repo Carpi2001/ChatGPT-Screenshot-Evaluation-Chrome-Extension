@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Screeshot & Describe",
-  "version": "1.0.2",
+  "version": "1.1.1",
   "description": "Capture the full webpage and get a description from ChatGPT.",
   "permissions": ["scripting", "activeTab", "storage", "contextMenus", "tabs","notifications","tts"],
   "background": {
