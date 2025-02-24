@@ -112,15 +112,10 @@ function sendAlert(aiResponse) {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         if (tabs.length > 0) {
 			const tabId = tabs[0].id;
-            chrome.scripting.executeScript({//if the content.js isn't injected already, this injects it. Not sure why I needed this but wasn't injecting before. Need to look into this.
-                target: { tabId },
-                files: ["content.js"]
-            }, () => {
-                // Now send message to content script
-                chrome.tabs.sendMessage(tabId, { aiAlert: aiResponse });//sends a message to the tab with the alert text
-            });
+            chrome.tabs.sendMessage(tabId, { aiAlert: aiResponse });//sends a message to the tab with the alert text
         }
     });
+	
 }//creates a chrome alert on the screenshotted page with the passed text
 
 function speakAlert(aiResponse){
